@@ -3,7 +3,6 @@ package com.sky.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.sky.constant.StatusConstant;
-import com.sky.context.BaseContext;
 import com.sky.dto.CategoryDTO;
 import com.sky.dto.CategoryPageQueryDTO;
 import com.sky.entity.Category;
@@ -14,7 +13,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -77,12 +75,16 @@ public class CategoryServiceImpl implements CategoryService {
 
     /**
      * 根据类型查询分类
+     *
      * @param type
      * @return
      */
     @Override
-    public Category sortByType(Integer type) {
-        return null;
+    public List<Category> selectByType(Integer type) {
+
+        List<Category> categoryList = categoryMapper.selectById(type);
+
+        return categoryList;
     }
 
     /**

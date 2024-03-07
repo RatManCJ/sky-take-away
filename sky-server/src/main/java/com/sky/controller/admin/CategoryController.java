@@ -15,6 +15,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping("/admin/category")
 @Slf4j
@@ -73,11 +76,11 @@ public class CategoryController {
 
     @GetMapping("/list")
     @ApiOperation("根据类型查询分类")
-    public Result<Category> sortByType(Integer type){
+    public Result<List<Category>> sortByType(Integer type){
 
-        Category category = categoryService.sortByType(type);
+        List<Category> categoryList = categoryService.selectByType(type);
 
-        return Result.success();
+        return Result.success(categoryList);
     }
 
     /**

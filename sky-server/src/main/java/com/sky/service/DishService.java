@@ -1,5 +1,6 @@
 package com.sky.service;
 
+import com.sky.dto.DishDTO;
 import com.sky.dto.DishPageQueryDTO;
 import com.sky.result.PageResult;
 
@@ -18,4 +19,11 @@ public interface DishService {
      * @param id
      */
     void startOrStop(Integer status, Long id);
+
+    /**
+     * 新增菜品和对应口味
+     * @param dishDTO
+     */
+    void saveWithFlavor(DishDTO dishDTO);
+
 }

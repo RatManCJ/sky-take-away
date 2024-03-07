@@ -18,6 +18,7 @@
         order by sort desc
     </select>
 
+
     <update id="update" parameterType="Category">
         update category
         <set>

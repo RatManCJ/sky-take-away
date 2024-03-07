@@ -14,4 +14,11 @@ public interface DishMapper {
     Page<Dish> pageQuery(DishPageQueryDTO dishPageQueryDTO);
     @AutoFill(value = OperationType.UPDATE)
     void update(Dish build);
+
+    /**
+     * 插入菜品数据
+     * @param dish
+     */
+    @AutoFill(value = OperationType.INSERT)
+    void insert(Dish dish);
 }

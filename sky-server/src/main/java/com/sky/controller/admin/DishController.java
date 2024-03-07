@@ -1,5 +1,6 @@
 package com.sky.controller.admin;
 
+import com.sky.dto.DishDTO;
 import com.sky.dto.DishPageQueryDTO;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
@@ -43,6 +44,15 @@ public class DishController {
     public Result startOrStop(@PathVariable("status") Integer status,Long id){
         log.info("菜品起售、停售");
         dishService.startOrStop(status, id);
+        return Result.success();
+    }
+
+
+    @PostMapping
+    @ApiOperation("新增菜品")
+    public Result save(@RequestBody DishDTO dishDTO){
+        log.info("新增菜品:{}",dishDTO);
+        dishService.saveWithFlavor(dishDTO);
         return Result.success();
     }
 
