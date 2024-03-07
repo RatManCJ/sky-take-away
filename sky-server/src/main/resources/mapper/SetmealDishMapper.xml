@@ -11,4 +11,7 @@
          #{dishId}
      </foreach>
  </select>
+    <select id="getDishIdsById" resultType="com.sky.entity.SetmealDish">
+
+    </select>
 </mapper>

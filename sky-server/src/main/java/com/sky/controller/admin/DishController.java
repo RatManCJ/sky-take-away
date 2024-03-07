@@ -74,7 +74,7 @@ public class DishController {
 
     @PutMapping
     @ApiOperation("修改菜品")
-    public Result changeById(@RequestBody DishDTO dishDTO){
+    public Result updateById(@RequestBody DishDTO dishDTO){
         log.info("修改菜品{}",dishDTO);
         dishService.updateWithFlavor(dishDTO);
         return Result.success();

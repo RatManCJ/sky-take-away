@@ -3,27 +3,29 @@ package com.sky.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.sky.constant.StatusConstant;
-import com.sky.context.BaseContext;
 import com.sky.dto.SetmealDTO;
 import com.sky.dto.SetmealPageQueryDTO;
 import com.sky.entity.Setmeal;
+import com.sky.entity.SetmealDish;
+import com.sky.mapper.SetmealDishMapper;
 import com.sky.mapper.SetmealMapper;
 import com.sky.result.PageResult;
 import com.sky.service.SetmealService;
+import com.sky.vo.SetmealVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class SetmealServiceServiceImpl implements SetmealService {
+public class SetmealServiceImpl implements SetmealService {
 
     @Autowired
     private SetmealMapper setmealMapper;
 
+    @Autowired
+    private SetmealDishMapper setmealDishMapper;
     /**
      * 分页查询
      * @param setmealPageQueryDTO
@@ -63,20 +65,34 @@ public class SetmealServiceServiceImpl implements SetmealService {
      * @param setmealDTO
      */
     @Override
-    public void save(SetmealDTO setmealDTO) {
+    public void saveWithDish(SetmealDTO setmealDTO) {
         Setmeal setmeal = new Setmeal();
         BeanUtils.copyProperties(setmealDTO,setmeal);
 
         setmeal.setStatus(StatusConstant.ENABLE);
 
-//        setmeal.setCreateTime(LocalDateTime.now());
-//        setmeal.setUpdateTime(LocalDateTime.now());
-//
-//        setmeal.setCreateUser(BaseContext.getCurrentId());
-//        setmeal.setUpdateUser(BaseContext.getCurrentId());
-
         setmealMapper.insert(setmeal);
 
+    }
+
+    /**
+     * 根据id查询套餐
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public SetmealVO getByIdWithDish(Long id) {
+
+        Setmeal setmeal = setmealDishMapper.getById(id);
+
+        List<SetmealDish> setmealDishes = setmealDishMapper.getDishIdsById(id);
+
+        SetmealVO setmealVO = new SetmealVO();
+        BeanUtils.copyProperties(setmeal,setmealVO);
+        setmealVO.setSetmealDishes(setmealDishes);
+
+        return setmealVO;
     }
 
     @Override
