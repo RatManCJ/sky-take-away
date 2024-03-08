@@ -1,3 +1,7 @@
+/**
+ *
+ */
+
 package com.sky.mapper;
 
 import com.sky.entity.Setmeal;
@@ -18,9 +22,11 @@ public interface SetmealDishMapper {
 
     List<Long> getSetmealIdsByDishIds(List<Long> dishIds);
 
-    @Select("select * from setmeal_meal where setmeal_id = #{setmealId}")
+    @Select("select * from setmeal_dish where setmeal_id = #{setmealId}")
     List<SetmealDish> getDishIdsById(Long setmealId);
 
-    @Select("select * from where id = #{id}")
+    @Select("select * from setmeal_dish where id = #{id}")
     Setmeal getById(Long id);
+
+
 }

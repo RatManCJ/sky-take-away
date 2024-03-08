@@ -5,8 +5,10 @@ import com.github.pagehelper.PageHelper;
 import com.sky.constant.StatusConstant;
 import com.sky.dto.SetmealDTO;
 import com.sky.dto.SetmealPageQueryDTO;
+import com.sky.entity.Dish;
 import com.sky.entity.Setmeal;
 import com.sky.entity.SetmealDish;
+import com.sky.mapper.DishMapper;
 import com.sky.mapper.SetmealDishMapper;
 import com.sky.mapper.SetmealMapper;
 import com.sky.result.PageResult;
@@ -15,6 +17,7 @@ import com.sky.vo.SetmealVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -26,6 +29,9 @@ public class SetmealServiceImpl implements SetmealService {
 
     @Autowired
     private SetmealDishMapper setmealDishMapper;
+
+    @Autowired
+    private DishMapper dishMapper;
     /**
      * 分页查询
      * @param setmealPageQueryDTO
@@ -65,6 +71,7 @@ public class SetmealServiceImpl implements SetmealService {
      * @param setmealDTO
      */
     @Override
+    @Transactional
     public void saveWithDish(SetmealDTO setmealDTO) {
         Setmeal setmeal = new Setmeal();
         BeanUtils.copyProperties(setmealDTO,setmeal);
@@ -73,27 +80,17 @@ public class SetmealServiceImpl implements SetmealService {
 
         setmealMapper.insert(setmeal);
 
+        Long id = setmeal.getId();
+        List<SetmealDish> setmealDishes = setmealDTO.getSetmealDishes();
+
+        if (setmealDishes != null && !setmealDishes.isEmpty()){
+            setmealDishes.forEach(setmealDish -> setmealDish.setSetmealId(id));
+            setmealMapper.insertBatch(setmealDishes);
+        }
+
+
     }
 
-    /**
-     * 根据id查询套餐
-     *
-     * @param id
-     * @return
-     */
-    @Override
-    public SetmealVO getByIdWithDish(Long id) {
-
-        Setmeal setmeal = setmealDishMapper.getById(id);
-
-        List<SetmealDish> setmealDishes = setmealDishMapper.getDishIdsById(id);
-
-        SetmealVO setmealVO = new SetmealVO();
-        BeanUtils.copyProperties(setmeal,setmealVO);
-        setmealVO.setSetmealDishes(setmealDishes);
-
-        return setmealVO;
-    }
 
     @Override
     public void update(SetmealDTO setmealDTO) {
