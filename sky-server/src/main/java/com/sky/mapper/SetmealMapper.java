@@ -14,7 +14,7 @@ public interface SetmealMapper {
     @AutoFill(value = OperationType.UPDATE)
     void update(Setmeal setmeal);
 
-    @Insert("insert into dish (name, category_id, price, image, description, create_time, update_time, create_user, update_user, status)" +
+    @Insert("insert into setmeal (name, category_id, price, image, description, create_time, update_time, create_user, update_user, status)" +
             "values " +
             "(#{name},#{categoryId},#{price},#{image},#{description},#{createTime},#{updateTime},#{createUser},#{updateUser},#{status})")
     @AutoFill(value = OperationType.INSERT)

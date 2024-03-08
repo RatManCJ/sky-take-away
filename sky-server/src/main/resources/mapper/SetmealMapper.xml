@@ -5,7 +5,7 @@
 
 <mapper namespace="com.sky.mapper.SetmealMapper">
     <update id="update" parameterType="Setmeal">
-        update dish
+        update setmeal
         <set>
             <if test="categoryId != null">category_id = #{categoryId},</if>
             <if test="name != null">name = #{name},</if>
@@ -22,7 +22,7 @@
     </update>
 
     <select id="pageQuery" resultType="com.sky.entity.Setmeal">
-        select * from dish
+        select * from setmeal
         <where>
             <if test="categoryId != null">
                 and category_id = #{categoryId}
